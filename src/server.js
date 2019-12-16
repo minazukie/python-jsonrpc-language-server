@@ -53,11 +53,21 @@ wss.on("connection", ws => {
         contentLength = 0
       })
 
+      pyls.on("exit", () => {
+        ws.close(1000)
+        pool.recycle(pyls, true)
+      })
+
       ws.on("message", data => {
         console.log(logPrefix, "receive data: ", data)
         const contentLength = Buffer.byteLength(data, "utf-8")
         const resp = `Content-Length: ${contentLength}\r\nContent-Type: application/vscode-jsonrpc; charset=utf-8\r\n\r\n${data}`
-        pyls.stdin.write(resp)
+        try {
+          pyls.stdin.write(resp)
+        } catch (e) {
+          ws.close(1000)
+          pool.recycle(pyls, true)
+        }
       })
 
       ws.on("close", () => {

@@ -9,6 +9,13 @@ export class ChildProcessPool {
     console.log("pool size: ", size)
     this.activeProcesses = []
     this.inactiveProcesses = []
+
+    // setInterval(() => {
+    //   console.log(
+    //     this.activeProcesses.map(p => p.pid),
+    //     this.inactiveProcesses.map(p => p.pid)
+    //   )
+    // }, 1000)
   }
 
   _activeProcessesLength() {
@@ -23,8 +30,6 @@ export class ChildProcessPool {
     return new Promise((res, rej) => {
       if (this._activeProcessesLength() < this.size) {
         const newProcess = spawn(COMMAND, COMMAND_ARGS)
-        console.log(newProcess)
-
         this.activeProcesses.push(newProcess)
         res(newProcess)
       } else {
@@ -48,14 +53,17 @@ export class ChildProcessPool {
     })
   }
 
-  recycle(process) {
+  recycle(process, killed = false) {
     return new Promise((res, rej) => {
       const index = this.activeProcesses.indexOf(process)
       if (index === -1) {
         rej("process does not exist")
       } else {
         this.activeProcesses.splice(index, 1)
-        this.inactiveProcesses.push(process)
+
+        if (!killed) {
+          this.inactiveProcesses.push(process)
+        }
         res()
       }
     })
