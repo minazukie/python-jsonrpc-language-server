@@ -1,0 +1,28 @@
+{
+  "name": "language-server",
+  "version": "1.0.0",
+  "main": "src/server.js",
+  "repository": "https://github.com/minazukie/python-jsonrpc-language-server.git",
+  "author": "minazukie <minazukie2015@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "ws": "^7.2.1"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.7.5",
+    "@babel/core": "^7.7.5",
+    "@babel/node": "^7.7.4",
+    "@babel/preset-env": "^7.7.6",
+    "@types/jest": "^24.0.23",
+    "@types/node": "^12.12.17",
+    "eslint": "^6.7.2",
+    "eslint-plugin-node": "^10.0.0",
+    "jest": "^24.9.0"
+  },
+  "scripts": {
+    "dev": "babel-node src/server.js",
+    "build": "babel src --out-dir out -s true",
+    "test": "jest"
+  },
+  "type": "module"
+}

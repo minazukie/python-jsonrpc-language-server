@@ -1,0 +1,10 @@
+{
+  "parserOptions": {
+    "ecmaVersion": 2015,
+    "sourceType": "module"
+  },
+  "extends": ["eslint:recommended", "plugin:node/recommended"],
+  "env": {
+    "jest": true
+  }
+}
